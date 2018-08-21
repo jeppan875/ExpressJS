@@ -22,7 +22,7 @@ let studiesSchema = mongoose.Schema({
     type: String,
     required: true
   }
-}, {collection: 'studies'})
+})
 
 const studies = mongoose.model('Studies', studiesSchema)
 
