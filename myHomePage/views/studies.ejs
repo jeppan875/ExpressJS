@@ -1,5 +1,9 @@
 <% include ./partials/header.ejs %>
-<h5>studies</h5>
-<h5><%= name %></h5>
-<p><%= description %></p>
+<div class="container">
+    <ul class="list-group">
+    <% for(let i=0; i<studies.length; i++) { %>
+        <a href="/studies/<%= studies[i]._id%>" class="list-group-item list-group-item-action"><%= studies[i].name %></a>   
+    <% } %>
+</ul>
+</div>
 <% include ./partials/footer.ejs %>
