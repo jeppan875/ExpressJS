@@ -1,5 +1,6 @@
 <% include ./partials/header.ejs %>
 <div class="container">
+    <a class="btn btn-primary" href="/studies/add" role="button">Link</a>
     <ul class="list-group">
     <% for(let i=0; i<studies.length; i++) { %>
         <a href="/studies/<%= studies[i]._id%>" class="list-group-item list-group-item-action"><%= studies[i].name %></a>   

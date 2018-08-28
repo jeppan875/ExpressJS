@@ -5,8 +5,6 @@ const Studies = require('../models/studies')
 router.get('/', (req, res) => {
   Studies.find({}, (err, studies) => {
     studies.sort(function (a, b) {
-        // Turn your strings into dates, and then subtract them
-        // to get a value that is either negative, positive, or zero.
       return new Date(b.endDate) - new Date(a.endDate)
     })
     if (err) {
@@ -29,6 +27,12 @@ router.get('/:id', function (req, res) {
       })
     }
   })
+})
+router.get('/add', function (err, req, res) {
+  if (err) {
+    console.log(err)
+  }
+  res.render('addstudy')
 })
 
 module.exports = router

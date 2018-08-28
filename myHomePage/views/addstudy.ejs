@@ -1,0 +1,29 @@
+<% include ./partials/header.ejs %>
+      <form method="post" action="/studies/add">
+        <div class="form-group">
+          <label for="name">Email address</label>
+          <input type="text" name="name" class="form-control" id="name" placeholder="course name">
+        </div>
+        <div class="form-group">
+                <label for="description">Desscription:</label>
+                <textarea class="form-control" name="description" rows="5" id="description"></textarea>
+        </div> 
+        <div class="form-group">
+            <label for="grade">User Name</label>
+            <input type="text" name="grade" class="form-control" id="grade" placeholder="grade">
+        </div>
+        <div class="form-group">
+            <label for="enddate">User Name</label>
+            <input type="text" name="enddate" class="form-control" id="enddate" placeholder="enddate">
+        </div>
+        <div class="form-group">
+                <label for="points">User Name</label>
+                <input type="text" name="points" class="form-control" id="points" placeholder="points">
+            </div>
+            <div class="form-group">
+                <label for="instituition">User Name</label>
+                <input type="text" name="instituition" class="form-control" id="instituition" placeholder="instituition">
+            </div>
+        <button type="submit" class="btn btn-primary">Add new</button>
+      </form>
+<% include ./partials/footer.ejs %>
