@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     console.log('about')
     if (err) {
       console.log(err)
-    } else {  
+    } else {
       res.render('about', {
         name: studies[0].name,
         description: studies[0].description

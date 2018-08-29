@@ -13,11 +13,9 @@ router.get('/register', function (req, res) {
 
 // Register Proccess
 router.post('/register', function (req, res) {
-  console.log(req.body)
   const email = req.body.email
   const username = req.body.username
   const password = req.body.password
-  console.log(email)
  // const password2 = req.body.password2
   let newUser = new User({
     email: email,
