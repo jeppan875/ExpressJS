@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const Studies = require('./models/studies')
 const session = require('express-session')
 const passport = require('passport')
+const expressValidator = require('express-validator')
 // const flash = require('connect-flash')
 
 const app = express()
@@ -40,6 +41,7 @@ require('./config/passport')(passport)
 // Passport Middleware
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(expressValidator())
 // Express Session Middleware
 app.use(session({
   secret: 'keyboard cat',
@@ -78,7 +80,7 @@ let work = require('./routes/work')
 let about = require('./routes/about')
 let users = require('./routes/users')
 app.use('/studies', studies)
-app.use('/work', work)
+app.use('/works', work)
 app.use('/about', about)
 app.use('/users', users)
 

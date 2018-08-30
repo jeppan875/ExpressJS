@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 // work Schema
 let workSchema = mongoose.Schema({
-  name: {
+  company: {
     type: String,
     required: true
   },

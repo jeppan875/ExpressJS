@@ -1,0 +1,10 @@
+<% include ./partials/header.ejs %>
+<div class="container">
+    <a class="btn btn-primary" href="/works/add" role="button">Link</a>
+    <ul class="list-group">
+    <% for(let i=0; i<works.length; i++) { %>
+        <a href="/works/<%= works[i]._id%>" class="list-group-item list-group-item-action"><%= works[i].company %></a>   
+    <% } %>
+    </ul>
+</div>
+<% include ./partials/footer.ejs %>
