@@ -1,12 +1,13 @@
 <% include ./partials/header.ejs %>
 <div class="container">
-        <div class="card text-white bg-secondary mb-3">
-                <div class="card-header"><%= studies.name %><span class="small"> <%= studies.points %></span></div>
-                <div class="card-body">
-                  <p class="card-text"><%= studies.description %></p>
+                <h2><%= studies.name %></h2>
+                <p class="small">Points: <%= studies.points %></p>
+                <p class="small">Grade: <%= studies.grade %></p>
+                <div>
+                  <p><%= studies.description %></p>
                   <hr class="my-4">
                   <p class="small">linneaus university <%= studies.endDate %></p>
                 </div>
-            </div>
+            <a class="btn btn-primary" href="/studies/edit/<%= studies._id%>" role="button">Edit</a>
 </div>
 <% include ./partials/footer.ejs %>

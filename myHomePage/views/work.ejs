@@ -1,12 +1,11 @@
 <% include ./partials/header.ejs %>
 <div class="container">
-        <div class="card text-white bg-secondary mb-3">
-                <div class="card-header"><%= works.company %></div>
-                <div class="card-body">
-                  <p class="card-text"><%= works.description %></p>
+                <h2><%= works.company %><h2>
+                <div>
+                  <p><%= works.description %></p>
                   <hr class="my-4">
                   <p class="small"><%= works.startDate %> - <%= works.endDate %></p>
                 </div>
-            </div>
+                <a class="btn btn-primary" href="/works/edit/<%= works._id%>" role="button">Edit</a>
 </div>
 <% include ./partials/footer.ejs %>

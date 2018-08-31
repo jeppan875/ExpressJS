@@ -5,30 +5,30 @@
         <p class="alert alert-danger"><%= error.msg %></p>
         <% }) %>
       <% } %>  
-      <form method="post" action="/works/add">
+      <form method="post" action="/works/edit/<%= works._id%>">
         <div class="form-group row">
                 <label for="company" class="col-sm-2 col-form-label">Company:</label>
                 <div class="col-sm-10">
-                  <input type="text" name="company" class="form-control" id="company" placeholder="company">
+                  <input type="text" name="company" class="form-control" id="company" value="<%= works.company%>">
                 </div>
               </div>
               <div class="form-group row">
                   <label for="startDate" class="col-sm-2 col-form-label">Start date</label>
                   <div class="col-sm-10">
-                    <input type="text" name="startDate" class="form-control" id="startDate" placeholder="start date">
+                    <input type="text" name="startDate" class="form-control" id="startDate" value="<%= works.startDate%>">
                   </div>
                 </div>
               <div class="form-group row">
                 <label for="endDate" class="col-sm-2 col-form-label">End date</label>
                 <div class="col-sm-10">
-                  <input type="text" name="endDate" class="form-control" id="endDate" placeholder="end date">
+                  <input type="text" name="endDate" class="form-control" id="endDate" value="<%= works.endDate%>">
                 </div>
               </div>
             <div class="form-group">
                     <label for="description">Desscription:</label>
-                    <textarea class="form-control" name="description" rows="5" id="description"></textarea>
+                    <textarea class="form-control" name="description" rows="5" id="description"><%= works.description%></textarea>
             </div> 
-        <button type="submit" class="btn btn-primary">Add new</button>
+        <button type="submit" class="btn btn-primary">Edit work</button>
       </form>
     </div>
 <% include ./partials/footer.ejs %>
