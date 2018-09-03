@@ -7,6 +7,7 @@ const Studies = require('./models/studies')
 const session = require('express-session')
 const passport = require('passport')
 const expressValidator = require('express-validator')
+const cookieSession = require('cookie-session')
 // const flash = require('connect-flash')
 
 const app = express()
@@ -23,11 +24,6 @@ db.on('error', function (err) {
   console.log(err)
 })
 
-const logger = function (req, res, next) {
-  console.log('loogging..')
-  next()
-}
-
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 // Body Parser Middleware
@@ -35,28 +31,25 @@ app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
-app.use(logger)
+app.use(cookieSession({
+  keys: ['key1', 'key2']
+}))
+// Express Session Middleware
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}))
 // Passport Config
 require('./config/passport')(passport)
 // Passport Middleware
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(expressValidator())
-// Express Session Middleware
-app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
-}))
 
-// Express Messages Middleware
-/* app.use(require('connect-flash')())
-app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages')(req, res)
-  next()
-}) */
 app.use(express.static('public'))
-app.get('*', function (req, res, next) {
+
+app.use(function (req, res, next) {
   res.locals.user = req.user || null
   next()
 })
@@ -67,10 +60,7 @@ app.get('/', (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      res.render('index', {
-        name: studies[0].name,
-        description: studies[0].description
-      })
+      res.render('index')
     }
   })
 })

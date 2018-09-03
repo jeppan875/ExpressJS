@@ -11,6 +11,17 @@ router.get('/add', function (req, res) {
   req.session.errors = null
 })
 
+router.get('/delete/:id', function (req, res, next) {
+  let query = {_id: req.params.id}
+  Studies.deleteOne(query, function (err) {
+    if (err) {
+      console.log(err)
+    } else {
+      res.redirect('/studies')
+    }
+  })
+})
+
 router.get('/edit/:id', function (req, res) {
   Studies.findById(req.params.id, function (err, studies) {
     if (err) {
@@ -46,6 +57,7 @@ router.post('/add', function (req, res) {
   req.checkBody('endDate', 'End date is required').notEmpty()
   req.checkBody('points', 'Points is required').notEmpty()
   req.checkBody('grade', 'Grade is required').notEmpty()
+  req.checkBody('institute', 'Institute is required').notEmpty()
 
   // Get Errors
   let errors = req.validationErrors()
@@ -56,12 +68,14 @@ router.post('/add', function (req, res) {
     req.session.success = false
     res.redirect('/studies/add')
   } else {
+    console.log(req.body)
     let studies = new Studies()
     studies.name = req.body.name
     studies.description = req.body.description
     studies.grade = req.body.grade
     studies.endDate = req.body.endDate
     studies.points = req.body.points
+    studies.institute = req.body.institute
     studies.save(function (err) {
       if (err) {
         console.log(err)
@@ -106,6 +120,7 @@ router.post('/edit/:id', function (req, res) {
     })
   }
 })
+
 router.get('/:id', function (req, res) {
   Studies.findById(req.params.id, function (err, studies) {
     if (err) {

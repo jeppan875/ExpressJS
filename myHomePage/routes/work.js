@@ -9,6 +9,27 @@ router.get('/add', function (req, res) {
   })
   req.session.errors = null
 })
+router.get('/delete/:id', function (req, res, next) {
+  let query = {_id: req.params.id}
+  Works.deleteOne(query, function (err) {
+    if (err) {
+      console.log(err)
+    } else {
+      res.redirect('/works')
+    }
+  })
+})
+router.get('/delete/:id', function (req, res, next) {
+  let query = {_id: req.params.id}
+  Works.deleteOne(query, function (err) {
+    if (err) {
+      console.log(err)
+    } else {
+      res.redirect('/works')
+    }
+  })
+})
+
 router.get('/edit/:id', function (req, res) {
   Works.findById(req.params.id, function (err, works) {
     if (err) {

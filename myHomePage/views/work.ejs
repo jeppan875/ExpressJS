@@ -1,11 +1,12 @@
 <% include ./partials/header.ejs %>
-<div class="container">
+    <div class="container">
                 <h2><%= works.company %><h2>
                 <div>
+                  <p class="small"><%= works.startDate %> - <%= works.endDate %></p>
                   <p><%= works.description %></p>
                   <hr class="my-4">
-                  <p class="small"><%= works.startDate %> - <%= works.endDate %></p>
                 </div>
                 <a class="btn btn-primary" href="/works/edit/<%= works._id%>" role="button">Edit</a>
-</div>
+                <a class="btn btn-danger" href="/works/delete/<%= works._id%>" role="button">Delete</a>
+    </div>
 <% include ./partials/footer.ejs %>

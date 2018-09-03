@@ -21,6 +21,10 @@ let studiesSchema = mongoose.Schema({
   points: {
     type: String,
     required: true
+  },
+  institute: {
+    type: String,
+    required: true
   }
 })
 

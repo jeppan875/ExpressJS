@@ -6,8 +6,9 @@
                 <div>
                   <p><%= studies.description %></p>
                   <hr class="my-4">
-                  <p class="small">linneaus university <%= studies.endDate %></p>
+                  <p class="small"><%= studies.institute %> <%= studies.endDate %></p>
                 </div>
             <a class="btn btn-primary" href="/studies/edit/<%= studies._id%>" role="button">Edit</a>
+            <a class="btn btn-danger" href="/studies/delete/<%= studies._id%>" role="button">Delete</a>
 </div>
 <% include ./partials/footer.ejs %>
