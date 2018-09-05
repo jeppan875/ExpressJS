@@ -1,25 +1,16 @@
 const express = require('express')
 const router = express.Router()
 const Works = require('../models/work')
+const authenticated = require('../authenticated/authenticated')
 
-router.get('/add', function (req, res) {
+router.get('/add', authenticated.ensureAuthenticated, function (req, res) {
   res.render('add_work', {
     success: req.session.success,
     errors: req.session.errors || false
   })
   req.session.errors = null
 })
-router.get('/delete/:id', function (req, res, next) {
-  let query = {_id: req.params.id}
-  Works.deleteOne(query, function (err) {
-    if (err) {
-      console.log(err)
-    } else {
-      res.redirect('/works')
-    }
-  })
-})
-router.get('/delete/:id', function (req, res, next) {
+router.get('/delete/:id', authenticated.ensureAuthenticated, function (req, res, next) {
   let query = {_id: req.params.id}
   Works.deleteOne(query, function (err) {
     if (err) {
@@ -30,7 +21,7 @@ router.get('/delete/:id', function (req, res, next) {
   })
 })
 
-router.get('/edit/:id', function (req, res) {
+router.get('/edit/:id', authenticated.ensureAuthenticated, function (req, res) {
   Works.findById(req.params.id, function (err, works) {
     if (err) {
       console.log(err)
@@ -59,7 +50,7 @@ router.get('/', (req, res) => {
   })
 })
 
-router.post('/add', function (req, res) {
+router.post('/add', authenticated.ensureAuthenticated, function (req, res) {
   req.checkBody('company', 'Company name is required').notEmpty()
   req.checkBody('description', 'Author is required').notEmpty()
   req.checkBody('endDate', 'End date is required').notEmpty()
@@ -90,7 +81,7 @@ router.post('/add', function (req, res) {
     })
   }
 })
-router.post('/edit/:id', function (req, res) {
+router.post('/edit/:id', authenticated.ensureAuthenticated, function (req, res) {
   req.checkBody('company', 'Company name is required').notEmpty()
   req.checkBody('description', 'Author is required').notEmpty()
   req.checkBody('endDate', 'End date is required').notEmpty()

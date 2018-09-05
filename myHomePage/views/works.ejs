@@ -1,6 +1,8 @@
 <% include ./partials/header.ejs %>
 <div class="container">
+    <% if (user != null) { %>
     <a class="btn btn-primary" href="/works/add" role="button">Add</a>
+    <% } %>
     <ul class="list-group">
     <% for(let i=0; i<works.length; i++) { %>
         <a href="/works/<%= works[i]._id%>" class="list-group-item list-group-item-action"><%= works[i].company %></a>   

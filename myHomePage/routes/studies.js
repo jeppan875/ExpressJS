@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const Studies = require('../models/studies')
+const authenticated = require('../authenticated/authenticated')
 
-router.get('/add', function (req, res) {
+router.get('/add', authenticated.ensureAuthenticated, function (req, res) {
   res.render('add_study', {
     success: req.session.success,
     errors: req.session.errors || false
@@ -11,7 +12,7 @@ router.get('/add', function (req, res) {
   req.session.errors = null
 })
 
-router.get('/delete/:id', function (req, res, next) {
+router.get('/delete/:id', authenticated.ensureAuthenticated, function (req, res, next) {
   let query = {_id: req.params.id}
   Studies.deleteOne(query, function (err) {
     if (err) {
@@ -22,7 +23,7 @@ router.get('/delete/:id', function (req, res, next) {
   })
 })
 
-router.get('/edit/:id', function (req, res) {
+router.get('/edit/:id', authenticated.ensureAuthenticated, function (req, res) {
   Studies.findById(req.params.id, function (err, studies) {
     if (err) {
       console.log(err)
@@ -51,7 +52,7 @@ router.get('/', (req, res) => {
     }
   })
 })
-router.post('/add', function (req, res) {
+router.post('/add', authenticated.ensureAuthenticated, function (req, res) {
   req.checkBody('name', 'Course name is required').notEmpty()
   req.checkBody('description', 'Author is required').notEmpty()
   req.checkBody('endDate', 'End date is required').notEmpty()
@@ -87,7 +88,7 @@ router.post('/add', function (req, res) {
     })
   }
 })
-router.post('/edit/:id', function (req, res) {
+router.post('/edit/:id', authenticated.ensureAuthenticated, function (req, res) {
   req.checkBody('name', 'Course name is required').notEmpty()
   req.checkBody('description', 'Author is required').notEmpty()
   req.checkBody('endDate', 'End date is required').notEmpty()

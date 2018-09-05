@@ -2,17 +2,18 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
+const authenticated = require('../authenticated/authenticated')
 
 // Bring in User Model
 let User = require('../models/user')
 
 // Register Form
-router.get('/register', function (req, res) {
+router.get('/register', authenticated.ensureAuthenticated, function (req, res) {
   res.render('register')
 })
 
 // Register Proccess
-router.post('/register', function (req, res) {
+router.post('/register', authenticated.ensureAuthenticated, function (req, res) {
   const email = req.body.email
   const username = req.body.username
   const password = req.body.password
@@ -59,8 +60,6 @@ router.post('/login', function (req, res, next) {
 
 // logout
 router.get('/logout', function (req, res, next) {
-  console.log(req.user + 'loghhhhhhhhhhhhhhhhh')
-  console.log(req.isAuthenticated())
   req.logout()
 
   res.redirect('/')
