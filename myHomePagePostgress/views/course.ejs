@@ -1,0 +1,16 @@
+<% include ./partials/header.ejs %>
+<div class="container">
+                <h2><%= studies.name %></h2>
+                <p class="small">Points: <%= studies.points %></p>
+                <p class="small">Grade: <%= studies.grade %></p>
+                <div>
+                  <p><%= studies.description %></p>
+                  <hr class="my-4">
+                  <p class="small"><%= studies.institute %> <%= studies.endDate %></p>
+                </div>
+                <% if (user != null) { %>
+            <a class="btn btn-primary" href="/studies/edit/<%= studies._id%>" role="button">Edit</a>
+            <a class="btn btn-danger" href="/studies/delete/<%= studies._id%>" role="button">Delete</a>
+            <% } %>
+</div>
+<% include ./partials/footer.ejs %>

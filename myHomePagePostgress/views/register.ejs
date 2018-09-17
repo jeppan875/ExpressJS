@@ -1,0 +1,24 @@
+<% include ./partials/header.ejs %>
+<div class="container">
+      <form method="post" action="/users/register">
+        <div class="form-group">
+          <label for="Email">Email address</label>
+          <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+                <label for="Username">User Name</label>
+                <input type="text" name="username" class="form-control" id="username" placeholder="user name">
+              </div>
+        <div class="form-group">
+          <label for="Password">Password</label>
+          <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+                <label for="Password2">Repeat Password</label>
+                <input type="password" name="password2" class="form-control" id="password2" placeholder="Reapet Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+<% include ./partials/footer.ejs %>

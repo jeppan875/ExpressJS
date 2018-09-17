@@ -1,0 +1,52 @@
+<% include ./partials/header.ejs %>
+<div class="container">
+      <% if (errors) { %>
+        <% errors.forEach(function(error){ %>
+        <p class="alert alert-danger"><%= error.msg %></p>
+        <% }) %>
+      <% } %>  
+      <form method="post" action="/studies/add">
+        <div class="form-group row">
+                <label for="name" class="col-sm-2 col-form-label">Course name:</label>
+                <div class="col-sm-10">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="course name">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="endDate" class="col-sm-2 col-form-label">End date</label>
+                <div class="col-sm-10">
+                  <input type="text" name="endDate" class="form-control" id="endDate" placeholder="end date">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="points" class="col-sm-2 col-form-label">Points</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="points" class="form-control" id="points" placeholder="points">
+                    </div>
+                </div>
+                <div class="form-group row">
+                        <label for="grade" class="col-sm-2 col-form-label">Grade</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="grade" class="form-control" id="grade" placeholder="grade">
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Institute</label>
+                    </div>
+                    <select class="form-control" id="inputGroupSelect01" name="institute">
+                      <option selected>Choose...</option>
+                      <option value="Linneaus University">Linneaus University</option>
+                      <option value="Nackademin">Nackademin</option>
+                      <option value="Jensen Vocational College">Jensen Vocational College</option>
+                      <option value="Luleå Technical University">Luleå Technical University</option>
+                    </select>
+                  </div>
+            <div class="form-group">
+                    <label for="description">Desscription:</label>
+                    <textarea class="form-control" name="description" rows="5" id="description"></textarea>
+            </div> 
+        <button type="submit" class="btn btn-primary">Add new</button>
+      </form>
+    </div>
+<% include ./partials/footer.ejs %>
