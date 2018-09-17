@@ -1,58 +1,45 @@
 const express = require('express')
 const router = express.Router()
-const Works = require('../models/work')
-const authenticated = require('../authenticated/authenticated')
+const { Client } = require('pg')
+// const authenticated = require('../authenticated/authenticated')
+const config = require('../config/database')
+const client = new Client(config)
+client.connect()
 
-router.get('/add', authenticated.ensureAuthenticated, function (req, res) {
+router.get('/add', function (req, res) {
   res.render('add_work', {
     success: req.session.success,
     errors: req.session.errors || false
   })
   req.session.errors = null
 })
-router.get('/delete/:id', authenticated.ensureAuthenticated, function (req, res, next) {
-  let query = {_id: req.params.id}
-  Works.deleteOne(query, function (err) {
-    if (err) {
-      console.log(err)
-    } else {
-      res.redirect('/works')
-    }
-  })
+
+router.get('/delete/:id', async function (req, res, next) {
+  await client.query('delete from works where id = $1', [req.params.id])
+  res.redirect('/works')
 })
 
-router.get('/edit/:id', authenticated.ensureAuthenticated, function (req, res) {
-  Works.findById(req.params.id, function (err, works) {
-    if (err) {
-      console.log(err)
-    } else {
-      res.render('edit_work', {
-        works,
-        success: req.session.success,
-        errors: req.session.errors || false
-      })
-    }
-  })
-  req.session.errors = null
-})
-router.get('/', (req, res) => {
-  Works.find({}, (err, works) => {
-    works.sort(function (a, b) {
-      return new Date(b.endDate) - new Date(a.endDate)
-    })
-    if (err) {
-      console.log(err)
-    } else {
-      res.render('works', {
-        works
-      })
-    }
-  })
+router.get('/edit/:id', async function (req, res) {
+  const result = await client.query('select * from works where id=$1', [req.params.id])
+  const works = result.rows[0]
+  res.render('edit_work', { works,
+    success: req.session.success,
+    errors: req.session.errors || false}
+  )
 })
 
-router.post('/add', authenticated.ensureAuthenticated, function (req, res) {
+router.get('/', async (req, res) => {
+  const result = await client.query('select * from works')
+  const works = result.rows
+  works.sort(function (a, b) {
+    return new Date(b.endDate) - new Date(a.endDate)
+  })
+  res.render('works', { works })
+})
+
+router.post('/add', async function (req, res) {
   req.checkBody('company', 'Company name is required').notEmpty()
-  req.checkBody('description', 'Author is required').notEmpty()
+  req.checkBody('description', 'Description is required').notEmpty()
   req.checkBody('endDate', 'End date is required').notEmpty()
   req.checkBody('startDate', 'Start date is required').notEmpty()
 
@@ -65,23 +52,21 @@ router.post('/add', authenticated.ensureAuthenticated, function (req, res) {
     req.session.success = false
     res.redirect('/works/add')
   } else {
-    let work = new Works()
+    let work = {}
     work.company = req.body.company
     work.description = req.body.description
     work.startDate = req.body.startDate
     work.endDate = req.body.endDate
-    work.save(function (err) {
-      if (err) {
-        console.log(err)
-      } else {
-        req.session.success = true
-       // req.flash('success', 'Article Added')
-        res.redirect('/')
-      }
-    })
+    await client
+    .query(
+      'insert into works(company, description, startdate, enddate) values($1, $2, $3, $4)',
+      [work.company, work.description, work.startDate, work.endDate]
+    )
+    res.redirect('/works')
   }
 })
-router.post('/edit/:id', authenticated.ensureAuthenticated, function (req, res) {
+
+router.post('/edit/:id', async function (req, res) {
   req.checkBody('company', 'Company name is required').notEmpty()
   req.checkBody('description', 'Author is required').notEmpty()
   req.checkBody('endDate', 'End date is required').notEmpty()
@@ -101,26 +86,21 @@ router.post('/edit/:id', authenticated.ensureAuthenticated, function (req, res) 
     work.description = req.body.description
     work.startDate = req.body.startDate
     work.endDate = req.body.endDate
-    let query = {_id: req.params.id}
+    let id = req.params.id
 
-    Works.update(query, work, function (err) {
-      if (err) {
-        console.log(err)
-      } else {
-        res.redirect('/works')
-      }
-    })
+    await client
+    .query(
+      'update works set company=$1, description=$2, startdate=$3, enddate=$4 where id=$5',
+      [work.company, work.description, work.startDate, work.endDate, id]
+    )
+    res.redirect('/works')
   }
 })
-router.get('/:id', function (req, res) {
-  Works.findById(req.params.id, function (err, works) {
-    if (err) {
-      console.log(err)
-    } else {
-      res.render('work', {
-        works
-      })
-    }
-  })
+
+router.get('/:id', async function (req, res) {
+  const result = await client.query('select * from works where id=$1', [req.params.id])
+  const works = result.rows[0]
+  res.render('work', { works })
 })
+
 module.exports = router

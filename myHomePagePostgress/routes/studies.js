@@ -6,6 +6,7 @@ const { Client } = require('pg')
 
 const client = new Client(config)
 client.connect()
+
 router.get('/add', function (req, res) {
   res.render('add_study', {
     success: req.session.success,
@@ -27,7 +28,6 @@ router.get('/edit/:id', function (req, res) {
     .query('select * from studies where id=$1', [req.params.id])
     .then(result => {
       const studies = result.rows[0]
-      console.log(studies)
       res.render('edit_study', { studies,
         success: req.session.success,
         errors: req.session.errors || false})
@@ -40,7 +40,6 @@ router.get('/', (req, res) => {
     .query('select * from studies')
     .then(result => {
       const studies = result.rows
-      console.log(studies)
       studies.sort(function (a, b) {
         return new Date(b.endDate) - new Date(a.endDate)
       })
@@ -122,7 +121,6 @@ router.get('/:id', function (req, res) {
     .query('select * from studies where id=$1', [req.params.id])
     .then(result => {
       const studies = result.rows[0]
-      console.log(studies)
       res.render('course', { studies })
     })
     .catch(err => console.error(err))
