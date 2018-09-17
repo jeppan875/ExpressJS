@@ -13,12 +13,6 @@ const app = express()
 const client = new Client(config)
 client.connect()
 
-// just test
-client
-.query(
-  'insert into studies(name, description, grade, enddate, points, institute) values($1, $2, $3, $4, $5, $6)',
-  ['hf', 'hf', 'fh', '2018-01-31', 'p', 'Linneaus University']
-)
 .catch(err => console.error(err))
 
 app.set('views', path.join(__dirname, 'views'))

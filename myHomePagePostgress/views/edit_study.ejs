@@ -5,7 +5,7 @@
         <p class="alert alert-danger"><%= error.msg %></p>
         <% }) %>
       <% } %>  
-      <form method="post" action="/studies/edit/<%= studies._id%>">
+      <form method="post" action="/studies/edit/<%= studies.id%>">
         <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Course name:</label>
                 <div class="col-sm-10">
@@ -35,7 +35,7 @@
                           <label class="input-group-text" for="inputGroupSelect01">Institute</label>
                         </div>
                         <select class="form-control" id="inputGroupSelect01" name="institute">
-                          <option selected>Choose...</option>
+                          <option selected></option>
                           <option value="Linneaus University">Linneaus University</option>
                           <option value="Nackademin">Nackademin</option>
                           <option value="Jensen Vocational College">Jensen Vocational College</option>
